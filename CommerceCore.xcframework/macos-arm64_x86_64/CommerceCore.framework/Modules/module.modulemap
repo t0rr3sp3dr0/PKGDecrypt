@@ -1,0 +1,6 @@
+framework module CommerceCore [system] {
+    umbrella header "CommerceCore.h"
+
+    export *
+    module * { export * }
+}

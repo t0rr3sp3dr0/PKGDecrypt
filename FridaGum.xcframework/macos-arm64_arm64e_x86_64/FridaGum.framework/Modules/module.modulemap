@@ -1,0 +1,6 @@
+framework module FridaGum {
+    umbrella header "FridaGum.h"
+
+    export *
+    module * { export * }
+}

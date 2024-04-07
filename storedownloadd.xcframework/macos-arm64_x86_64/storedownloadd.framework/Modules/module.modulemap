@@ -1,0 +1,6 @@
+framework module storedownloadd [system] {
+    umbrella header "storedownloadd.h"
+
+    export *
+    module * { export * }
+}

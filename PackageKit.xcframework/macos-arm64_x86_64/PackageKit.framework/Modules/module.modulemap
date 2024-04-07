@@ -1,0 +1,6 @@
+framework module PackageKit [system] {
+    umbrella header "PackageKit.h"
+
+    export *
+    module * { export * }
+}
