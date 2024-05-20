@@ -17,7 +17,7 @@
 @implementation PKGDecrypt
 
 + (BOOL)runWithStoredownloaddPath:(NSString *)storedownloaddPath localFilePath:(NSString *)localFilePath dpInfo:(NSData *)dpInfo hwInfo:(nullable NSData *)hwInfo returningError:(NSError **)error {
-    void *handle = dlopen([storedownloaddPath cStringUsingEncoding:NSUTF8StringEncoding], RTLD_LAZY);
+    void *handle = dlopen([storedownloaddPath cStringUsingEncoding:NSUTF8StringEncoding], RTLD_LAZY | RTLD_NODELETE);
     if (!handle) {
         if (error) {
             *error = [NSError errorWithDomain:NSPOSIXErrorDomain code:-1 userInfo:@{
