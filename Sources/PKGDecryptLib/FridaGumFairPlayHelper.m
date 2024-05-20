@@ -21,7 +21,7 @@ static BOOL get_mac_address(unsigned char *data, unsigned int size) {
 
     for (size_t i = 0; i < size; ++i)
         data[i] = _hwInfo.ID[i];
-    
+
     return YES;
 }
 
@@ -35,22 +35,22 @@ static BOOL get_mac_address(unsigned char *data, unsigned int size) {
                 NSLocalizedDescriptionKey: [NSString stringWithFormat:@"data length %lu is greater than %lu", length, sizeof _hwInfo.ID],
             }];
         }
-        
+
         return NO;
     }
-    
+
     const unsigned char *bytes = [data bytes];
     for (size_t i = 0; i < length; ++i)
         _hwInfo.ID[i] = bytes[i];
-    
+
     _hwInfo.IDLength = (unsigned int) length;
-    
+
     return [self applyHWInfoReturningError:error];
 }
 
 + (BOOL)applyHWInfoReturningError:(NSError **)error {
     gum_init_embedded();
-    
+
     @try {
         return [self applyHWInfoWithGumEmbeddedReturningError:error];
     } @finally {
@@ -66,10 +66,10 @@ static BOOL get_mac_address(unsigned char *data, unsigned int size) {
                 NSLocalizedDescriptionKey: @"gum_module_find_export_by_name returned 0",
             }];
         }
-        
+
         return NO;
     }
-    
+
     return [self applyHWInfoWithGumEmbeddedWithAddress:address returningError:error];
 }
 
@@ -81,10 +81,10 @@ static BOOL get_mac_address(unsigned char *data, unsigned int size) {
                 NSLocalizedDescriptionKey: @"gum_interceptor_obtain returned NULL",
             }];
         }
-        
+
         return NO;
     }
-    
+
     @try {
         return [self applyHWInfoWithGumEmbeddedWithAddress:address withInterceptor:interceptor ReturningError:error];
     } @finally {
@@ -97,7 +97,7 @@ static BOOL get_mac_address(unsigned char *data, unsigned int size) {
     if (!ok) {
         return NO;
     }
-    
+
     Class aClass = NSClassFromString(@"FairPlayHelper");
     if (aClass == nil) {
         if (error) {
@@ -105,10 +105,10 @@ static BOOL get_mac_address(unsigned char *data, unsigned int size) {
                 NSLocalizedDescriptionKey: @"FairPlayHelper class not found",
             }];
         }
-        
+
         return NO;
     }
-    
+
     id sharedInstance = [aClass performSelector:@selector(sharedInstance)];
     if (sharedInstance == nil) {
         if (error) {
@@ -116,16 +116,16 @@ static BOOL get_mac_address(unsigned char *data, unsigned int size) {
                 NSLocalizedDescriptionKey: @"+[FairPlayHelper sharedInstance] returned nil",
             }];
         }
-        
+
         return NO;
     }
-    
+
     return YES;
 }
 
 + (BOOL)replaceGetMACAddressWithGumEmbeddedWithAddress:(GumAddress)address withInterceptor:(GumInterceptor *)interceptor returningError:(NSError **)error {
     gum_interceptor_begin_transaction(interceptor);
-    
+
     @try {
         return [self replaceGetMACAddressWithGumEmbeddedWithAddress:address withInterceptor:interceptor withTransactionReturningError:error];
     } @finally {
@@ -145,10 +145,10 @@ static BOOL get_mac_address(unsigned char *data, unsigned int size) {
                 NSLocalizedDescriptionKey: [NSString stringWithFormat:@"gum_interceptor_replace returned %d", replaceReturn],
             }];
         }
-        
+
         return NO;
     }
-    
+
     return YES;
 }
 

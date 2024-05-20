@@ -35,7 +35,7 @@
                 return NO;
             }
         }
-        
+
         @try {
             DecryptOperation *decryptOperation = [[NSClassFromString(@"DecryptOperation") alloc] initWithLocalFilePath:localFilePath dpInfo:dpInfo storeClient:nil];
             [decryptOperation run];
@@ -45,7 +45,7 @@
                     NSLocalizedDescriptionKey: [NSString stringWithFormat:@"%@: %@", [e name], [e reason]],
                 }];
             }
-            
+
             return NO;
         }
     } @finally {
@@ -56,11 +56,11 @@
                     NSLocalizedDescriptionKey: [NSString stringWithCString:dlerror() encoding:NSUTF8StringEncoding],
                 }];
             }
-            
+
             return NO;
         }
     }
-    
+
     return YES;
 }
 
