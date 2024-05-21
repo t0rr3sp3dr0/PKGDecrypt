@@ -16,7 +16,7 @@
 
 @implementation PKGDecrypt
 
-+ (BOOL)runWithStoredownloaddPath:(NSString *)storedownloaddPath localFilePath:(NSString *)localFilePath dpInfo:(NSData *)dpInfo hwInfo:(nullable NSData *)hwInfo returningError:(NSError **)error {
++ (BOOL)decryptArchiveAtPath:(NSString *)path dpInfo:(NSData *)dpInfo hwInfo:(nullable NSData *)hwInfo storedownloaddPath:(NSString *)storedownloaddPath returningError:(NSError **)error {
     void *handle = dlopen([storedownloaddPath cStringUsingEncoding:NSUTF8StringEncoding], RTLD_LAZY | RTLD_NODELETE);
     if (!handle) {
         if (error) {
@@ -37,7 +37,7 @@
         }
 
         @try {
-            DecryptOperation *decryptOperation = [[NSClassFromString(@"DecryptOperation") alloc] initWithLocalFilePath:localFilePath dpInfo:dpInfo storeClient:nil];
+            DecryptOperation *decryptOperation = [[NSClassFromString(@"DecryptOperation") alloc] initWithLocalFilePath:path dpInfo:dpInfo storeClient:nil];
             [decryptOperation run];
         } @catch(NSException *e) {
             if (error) {
@@ -64,7 +64,7 @@
     return YES;
 }
 
-+ (BOOL)verifyWithPath:(NSString *)path returningError:(NSError **)error {
++ (BOOL)verifyArchiveAtPath:(NSString *)path returningError:(NSError **)error {
     PKArchive *archive = [PKArchive archiveWithPath:path];
 
     NSArray<PKArchiveSignature *> *archiveSignatures = [archive archiveSignatures];

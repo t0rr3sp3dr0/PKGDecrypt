@@ -11,8 +11,8 @@ NS_ASSUME_NONNULL_BEGIN
 
 @interface PKGDecrypt : NSObject
 
-+ (BOOL)runWithStoredownloaddPath:(NSString *)storedownloaddPath localFilePath:(NSString *)path dpInfo:(NSData *)dpInfo hwInfo:(nullable NSData *)hwInfo returningError:(NSError **)error;
-+ (BOOL)verifyWithPath:(NSString *)path returningError:(NSError **)error;
++ (BOOL)decryptArchiveAtPath:(NSString *)path dpInfo:(NSData *)dpInfo hwInfo:(nullable NSData *)hwInfo storedownloaddPath:(NSString *)storedownloaddPath returningError:(NSError **)error;
++ (BOOL)verifyArchiveAtPath:(NSString *)path returningError:(NSError **)error;
 
 @end
 

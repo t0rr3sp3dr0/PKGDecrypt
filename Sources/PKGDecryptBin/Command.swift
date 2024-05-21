@@ -33,7 +33,7 @@ struct Command: ParsableCommand {
     var storedownloaddPath = "/System/Library/PrivateFrameworks/CommerceKit.framework/Versions/A/Resources/storedownloadd"
 
     mutating func run() throws {
-        if let _ = try? PKGDecrypt.verify(withPath: self.pkgPath) {
+        if let _ = try? PKGDecrypt.verifyArchive(atPath: self.pkgPath) {
             print("NOOP")
             return
         }
@@ -55,8 +55,8 @@ struct Command: ParsableCommand {
             try? fm.removeItem(atPath: tmpPath)
             try fm.copyItem(atPath: self.pkgPath, toPath: tmpPath)
 
-            try PKGDecrypt.run(withStoredownloaddPath: self.storedownloaddPath, localFilePath: tmpPath, dpInfo: dpInfo, hwInfo: hwInfo)
-            try PKGDecrypt.verify(withPath: tmpPath)
+            try PKGDecrypt.decryptArchive(atPath: tmpPath, dpInfo: dpInfo, hwInfo: hwInfo, storedownloaddPath: self.storedownloaddPath)
+            try PKGDecrypt.verifyArchive(atPath: tmpPath)
 
             try? fm.removeItem(atPath: self.pkgPath)
             try fm.moveItem(atPath: tmpPath, toPath: self.pkgPath)
