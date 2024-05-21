@@ -16,11 +16,13 @@ static struct FairPlayHWInfo_ _hwInfo = {
 };
 
 static BOOL get_mac_address(unsigned char *data, unsigned int size) {
-    if (size < _hwInfo.IDLength)
+    if (size < _hwInfo.IDLength) {
         return NO;
+    }
 
-    for (size_t i = 0; i < size; ++i)
+    for (size_t i = 0; i < size; ++i) {
         data[i] = _hwInfo.ID[i];
+    }
 
     return YES;
 }
@@ -40,8 +42,9 @@ static BOOL get_mac_address(unsigned char *data, unsigned int size) {
     }
 
     const unsigned char *bytes = [data bytes];
-    for (size_t i = 0; i < length; ++i)
+    for (size_t i = 0; i < length; ++i) {
         _hwInfo.ID[i] = bytes[i];
+    }
 
     _hwInfo.IDLength = (unsigned int) length;
 
@@ -134,11 +137,7 @@ static BOOL get_mac_address(unsigned char *data, unsigned int size) {
 }
 
 + (BOOL)replaceGetMACAddressWithGumEmbeddedWithAddress:(GumAddress)address withInterceptor:(GumInterceptor *)interceptor withTransactionReturningError:(NSError **)error {
-    GumReplaceReturn replaceReturn = gum_interceptor_replace(interceptor,
-                                                             GSIZE_TO_POINTER(address),
-                                                             GSIZE_TO_POINTER(get_mac_address),
-                                                             NULL,
-                                                             NULL);
+    GumReplaceReturn replaceReturn = gum_interceptor_replace(interceptor, GSIZE_TO_POINTER(address), GSIZE_TO_POINTER(get_mac_address), NULL, NULL);
     if (replaceReturn != GUM_REPLACE_OK) {
         if (error) {
             *error = [NSError errorWithDomain:NSPOSIXErrorDomain code:-1 userInfo:@{
