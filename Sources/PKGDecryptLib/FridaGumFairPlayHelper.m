@@ -60,7 +60,7 @@ static BOOL get_mac_address(unsigned char *data, unsigned int size) {
 
 + (BOOL)applyHWInfoWithGumEmbeddedReturningError:(NSError **)error {
     GumAddress address = gum_module_find_export_by_name("CommerceCore", "get_mac_address");
-    if (address == 0) {
+    if (!address) {
         if (error) {
             *error = [NSError errorWithDomain:NSPOSIXErrorDomain code:-1 userInfo:@{
                 NSLocalizedDescriptionKey: @"gum_module_find_export_by_name returned 0",
@@ -75,7 +75,7 @@ static BOOL get_mac_address(unsigned char *data, unsigned int size) {
 
 + (BOOL)applyHWInfoWithGumEmbeddedWithAddress:(GumAddress)address returningError:(NSError **)error {
     GumInterceptor *interceptor = gum_interceptor_obtain();
-    if (interceptor == NULL) {
+    if (!interceptor) {
         if (error) {
             *error = [NSError errorWithDomain:NSPOSIXErrorDomain code:-1 userInfo:@{
                 NSLocalizedDescriptionKey: @"gum_interceptor_obtain returned NULL",
@@ -99,7 +99,7 @@ static BOOL get_mac_address(unsigned char *data, unsigned int size) {
     }
 
     Class aClass = NSClassFromString(@"FairPlayHelper");
-    if (aClass == nil) {
+    if (!aClass) {
         if (error) {
             *error = [NSError errorWithDomain:NSPOSIXErrorDomain code:-1 userInfo:@{
                 NSLocalizedDescriptionKey: @"FairPlayHelper class not found",
@@ -110,7 +110,7 @@ static BOOL get_mac_address(unsigned char *data, unsigned int size) {
     }
 
     id sharedInstance = [aClass performSelector:@selector(sharedInstance)];
-    if (sharedInstance == nil) {
+    if (!sharedInstance) {
         if (error) {
             *error = [NSError errorWithDomain:NSPOSIXErrorDomain code:-1 userInfo:@{
                 NSLocalizedDescriptionKey: @"+[FairPlayHelper sharedInstance] returned nil",
