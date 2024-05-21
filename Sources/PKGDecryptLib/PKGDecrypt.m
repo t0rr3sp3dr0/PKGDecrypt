@@ -66,6 +66,19 @@
 
 + (BOOL)verifyWithPath:(NSString *)path returningError:(NSError **)error {
     PKArchive *archive = [PKArchive archiveWithPath:path];
+
+    NSArray<PKArchiveSignature *> *archiveSignatures = [archive archiveSignatures];
+    if ([archiveSignatures count] > 0) {
+        for (PKArchiveSignature *archiveSignature in archiveSignatures) {
+            BOOL ok = [archiveSignature verifySignedDataReturningError:error];
+            if (!ok) {
+                return NO;
+            }
+        }
+
+        return YES;
+    }
+
     return [archive verifyReturningError:error];
 }
 
