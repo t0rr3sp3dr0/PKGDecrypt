@@ -16,7 +16,7 @@
 
 @implementation PKGDecrypt
 
-+ (BOOL)decryptArchiveAtPath:(NSString *)path dpInfo:(NSData *)dpInfo hwInfo:(nullable NSData *)hwInfo storedownloaddPath:(NSString *)storedownloaddPath returningError:(NSError **)error {
++ (BOOL)decryptArchiveAtPath:(NSString *)path dpInfo:(NSData *)dpInfo hwInfo:(NSData *)hwInfo storedownloaddPath:(NSString *)storedownloaddPath returningError:(NSError **)error {
     void *handle = dlopen([storedownloaddPath cStringUsingEncoding:NSUTF8StringEncoding], RTLD_LAZY | RTLD_NODELETE);
     if (!handle) {
         if (error) {
