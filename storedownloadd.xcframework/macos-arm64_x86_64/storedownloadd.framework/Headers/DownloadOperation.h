@@ -13,6 +13,7 @@
 #include "ISOperation.h" // @import StoreFoundation;
 
 @class ISStoreClient; // @import StoreFoundation;
+
 @protocol ISOperationDelegate; // @import CommerceKit;
 
 @interface DownloadOperation : ISOperation <ISOperationDelegate> {

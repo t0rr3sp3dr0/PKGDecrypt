@@ -10,6 +10,7 @@
 @import Foundation;
 
 @class ISServiceClientInterface; // @import StoreFoundation;
+
 @protocol ISDownloadService; // @import StoreFoundation;
 
 // @interface DownloadServiceInterface : ISServiceClientInterface <ISDownloadService>

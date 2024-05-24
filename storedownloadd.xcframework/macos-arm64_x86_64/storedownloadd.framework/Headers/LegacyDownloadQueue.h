@@ -13,6 +13,7 @@
 @class Download; // #include "Download.h"
 @class DownloadErrorHandler; // #include "DownloadErrorHandler.h"
 @class StoreDownloadQueueSource; // #include "StoreDownloadQueueSource.h"
+
 @protocol ISOperationDelegate; // @import CommerceKit;
 @protocol DownloadQueueSourceDelegate; // #include "DownloadQueueSourceDelegate-Protocol.h"
 

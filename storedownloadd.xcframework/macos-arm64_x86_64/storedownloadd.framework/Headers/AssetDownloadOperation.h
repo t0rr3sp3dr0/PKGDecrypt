@@ -13,6 +13,7 @@
 #include "ISOperation.h" // @import StoreFoundation;
 
 @class SSDownloadAsset; // @import StoreFoundation;
+
 @protocol ISURLOperationDelegate; // @import CommerceKit;
 
 @interface AssetDownloadOperation : ISOperation <ISURLOperationDelegate>
