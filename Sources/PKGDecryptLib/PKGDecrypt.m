@@ -10,6 +10,7 @@
 #import <PackageKit/PackageKit.h>
 #import <storedownloadd/storedownloadd.h>
 
+#import "FileHelper.h"
 #import "FridaGumFairPlayHelper.h"
 
 #import "include/PKGDecrypt.h"
@@ -36,18 +37,22 @@
             }
         }
 
-        @try {
-            DecryptOperation *decryptOperation = [[NSClassFromString(@"DecryptOperation") alloc] initWithLocalFilePath:path dpInfo:dpInfo storeClient:nil];
-            [decryptOperation run];
-        } @catch(NSException *e) {
-            if (error) {
-                *error = [NSError errorWithDomain:NSCocoaErrorDomain code:-1 userInfo:@{
-                    NSLocalizedDescriptionKey: [NSString stringWithFormat:@"%@: %@", [e name], [e reason]],
-                }];
+        return [FileHelper iterateFileAtPath:path withChunksOfLength:10485760 error:error handler:^BOOL(NSString *path, NSError **error) {
+            @try {
+                DecryptOperation *decryptOperation = [[NSClassFromString(@"DecryptOperation") alloc] initWithLocalFilePath:path dpInfo:dpInfo storeClient:nil];
+                [decryptOperation run];
+            } @catch(NSException *e) {
+                if (error) {
+                    *error = [NSError errorWithDomain:NSCocoaErrorDomain code:-1 userInfo:@{
+                        NSLocalizedDescriptionKey: [NSString stringWithFormat:@"%@: %@", [e name], [e reason]],
+                    }];
+                }
+
+                return NO;
             }
 
-            return NO;
-        }
+            return YES;
+        }];
     } @finally {
         int ret = dlclose(handle);
         if (ret) {
@@ -60,8 +65,6 @@
             return NO;
         }
     }
-
-    return YES;
 }
 
 + (BOOL)verifyArchiveAtPath:(NSString *)path returningError:(NSError **)error {
